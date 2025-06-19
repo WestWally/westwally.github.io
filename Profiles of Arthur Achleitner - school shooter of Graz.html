@@ -1,0 +1,764 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profiles of Arthur Achleitner</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+        /* Tailwind CSS compiled output (subset for this project) */
+        *, ::before, ::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: #111827; color: #f9fafb; }
+        .min-h-screen { min-height: 100vh; }
+        .max-w-7xl { max-width: 80rem; }
+        .mx-auto { margin-left: auto; margin-right: auto; }
+        .px-4 { padding-left: 1rem; padding-right: 1rem; }
+        .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+        .py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+        .grid { display: grid; }
+        .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+        .gap-8 { gap: 2rem; }
+        .sticky { position: sticky; }
+        .top-0 { top: 0; }
+        .top-20 { top: 5rem; }
+        .z-20 { z-index: 20; }
+        .text-white { color: #fff; }
+        .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+        .font-bold { font-weight: 700; }
+        .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+        .mt-1 { margin-top: 0.25rem; }
+        .mb-12 { margin-bottom: 3rem; }
+        .space-y-2 > * + * { margin-top: 0.5rem; }
+        .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+        .font-semibold { font-weight: 600; }
+        .mb-4 { margin-bottom: 1rem; }
+        .text-d1d5db { color: #d1d5db; }
+        .rounded { border-radius: 0.25rem; }
+        .shadow { box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06); }
+
+        /* Custom styles */
+        .section-header {
+            color: #ffffff;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            text-transform: uppercase;
+        }
+        .sub-section {
+            margin-bottom: 1.5rem;
+            line-height: 1.75;
+            color: #d1d5db;
+        }
+        .sub-section h3 {
+            color: #e5e7eb;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        .sub-section ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .sub-section ul li {
+            margin-bottom: 0.5rem;
+        }
+        .link {
+            color: #3b82f6;
+            text-decoration: none;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #93c5fd;
+            transition: width 0.3s ease;
+        }
+        .link:hover {
+            color: #93c5fd;
+        }
+        .link:hover::after {
+            width: 100%;
+        }
+        .credits {
+            font-size: 0.875rem;
+            font-style: italic;
+            color: #9ca3af;
+            margin-top: 0.5rem;
+        }
+        .toc-item {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #f9fafb;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+        }
+        .toc-item:hover {
+            background-color: #3b82f6;
+            color: #ffffff;
+            transform: translateX(4px);
+        }
+        .toc-item.active {
+            background-color: #a78bfa;
+            color: #ffffff;
+        }
+        .toc-container {
+            background-color: rgba(55, 65, 81, 0.9);
+            backdrop-filter: blur(8px);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+        .nav-banner {
+            background: linear-gradient(to right, #1f2937, #111827);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+        }
+        .content-container {
+            background-color: rgba(55, 65, 81, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            padding: 2rem;
+        }
+        hr.section-divider {
+            border: 0;
+            height: 2px;
+            background: linear-gradient(to right, #6b7280, #3b82f6, #6b7280);
+            margin: 2.5rem 0;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+        #toc {
+            list-style-type: none; /* Remove bullet points */
+        }
+
+        /* Media queries for responsive grid */
+        @media (min-width: 1024px) {
+            .lg\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+            .lg\:col-span-1 { grid-column: span 1 / span 1; }
+            .lg\:col-span-3 { grid-column: span 3 / span 3; }
+            .lg\:px-8 { padding-left: 2rem; padding-right: 2rem; }
+        }
+        @media (min-width: 640px) {
+            .sm\:px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Navigation -->
+    <nav class="nav-banner text-white py-4 sticky top-0 z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-3xl font-bold">Profiles of Arthur Achleitner (school shooter of Graz)</h1>
+            <p class="text-sm mt-1">Created by Reddit: u/Srybutimtoolazy, with contributions by Reddit: u/Tricky-Addition-6860</p>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Table of Contents -->
+            <aside class="lg:col-span-1">
+                <div class="sticky top-20 toc-container">
+                    <h2 class="text-lg font-semibold text-f9fafb mb-4">Table of Contents</h2>
+                    <ul id="toc" class="space-y-2 text-sm text-d1d5db">
+                        <li class="toc-item" data-target="intro">INTRODUCTION</li>
+                        <li class="toc-item" data-target="primary-profiles">THE MOST IMPORTANT PROFILES</li>
+                        <li class="toc-item" data-target="secondary-profiles">OTHER LESS SIGNIFICANT PROFILES</li>
+                        <li class="toc-item" data-target="deleted-profiles">OTHER PROFILES THAT WERE ALREADY DELETED WHEN DISCOVERED</li>
+                        <li class="toc-item" data-target="steam-platforms">STEAM SITES</li>
+                        <li class="toc-item" data-target="minecraft">MINECRAFT</li>
+                        <li class="toc-item" data-target="esports">ESPORTS AND GAMING PROFILES</li>
+                        <li class="toc-item" data-target="videos">VIDEOS FEATURING ARTHUR</li>
+                        <li class="toc-item" data-target="photos">PHOTOS FEATURING ARTHUR</li>
+                        <li class="toc-item" data-target="shotgun">SHOTGUN OWNED</li>
+                        <li class="toc-item" data-target="unconfirmed">CONSIDERED BUT REJECTED</li>
+                        <li class="toc-item" data-target="archiving">ARCHIVING NOTE</li>
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- Content -->
+            <main class="lg:col-span-3 content-container">
+                <section id="intro" class="mb-12">
+                    <h2 class="section-header">INTRODUCTION</h2>
+                    <div class="sub-section">
+                        <p>Original Reddit post: <a href="https://www.reddit.com/r/u_Srybutimtoolazy/comments/1l9yki3/current_list_of_profilesprofile_info_of_the_graz/" class="link" target="_blank">https://www.reddit.com/r/u_Srybutimtoolazy/comments/1l9yki3/current_list_of_profilesprofile_info_of_the_graz/</a></p>
+                        <p>Post got deleted, Archive: <a href="https://archive.ph/txrUu" class="link" target="_blank">https://archive.ph/txrUu</a></p>
+                    </div>
+                </section>
+                <hr class="section-divider">
+
+                <section id="primary-profiles" class="mb-12">
+                    <h2 class="section-header">THE MOST IMPORTANT PROFILES</h2>
+                    <div class="sub-section">
+                        <h3>YouTube: @arthurachleitner3860</h3>
+                        <ul>
+                            <li><a href="https://www.youtube.com/@arthurachleitner3860" class="link" target="_blank">https://www.youtube.com/@arthurachleitner3860</a> (channel ID: UCCR4SzasZ8MyNbxu9l7NPtw)</li>
+                            <li>Account suspended, Archive: <a href="https://archive.ph/poLNH" class="link" target="_blank">https://archive.ph/poLNH</a></li>
+                            <li>Videos have been archived: <a href="https://files.catbox.moe/6fvscg.mkv" class="link" target="_blank">https://files.catbox.moe/6fvscg.mkv</a> and <a href="https://files.catbox.moe/drxfga.mkv" class="link" target="_blank">https://files.catbox.moe/drxfga.mkv</a></li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Srybutimtoolazy (video archives)</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>YouTube: @zenie125</h3>
+                        <ul>
+                            <li><a href="http://www.youtube.com/@zenie125" class="link" target="_blank">http://www.youtube.com/@zenie125</a> (channel ID: UCGhF4L2Pa-F87QGTlXjFimQ)</li>
+                            <li>Account suspended, Archive: <a href="https://archive.ph/3cYdL" class="link" target="_blank">https://archive.ph/3cYdL</a></li>
+                            <li>Found based on the fact he mentioned his other channel "PirateFoxLP" in his "Ich bins :)" video on his first channel. This account was then linked in the description of this video he featured in: <a href="https://www.youtube.com/watch?v=1NUscuXKL4c" class="link" target="_blank">https://www.youtube.com/watch?v=1NUscuXKL4c</a></li>
+                            <li>Channel has been archived multiple times over before:</li>
+                            <li>2019: <a href="https://web.archive.org/web/20190615092414/https://youtube.com/channel/UCGhF4L2Pa-F87QGTlXjFimQ" class="link" target="_blank">https://web.archive.org/web/20190615092414/https://youtube.com/channel/UCGhF4L2Pa-F87QGTlXjFimQ</a></li>
+                            <li>2021: <a href="https://web.archive.org/web/20210210112601/https://youtube.com/channel/UCGhF4L2Pa-F87QGTlXjFimQ" class="link" target="_blank">https://web.archive.org/web/20210210112601/https://youtube.com/channel/UCGhF4L2Pa-F87QGTlXjFimQ</a></li>
+                            <li>Early 2024: <a href="https://web.archive.org/web/20240124043146/https://youtube.com/channel/UCGhF4L2Pa-F87QGTlXjFimQ" class="link" target="_blank">https://web.archive.org/web/20240124043146/https://youtube.com/channel/UCGhF4L2Pa-F87QGTlXjFimQ</a></li>
+                            <li>Late 2024: <a href="https://web.archive.org/web/20241225033732/http://www.youtube.com/@zenie125" class="link" target="_blank">https://web.archive.org/web/20241225033732/http://www.youtube.com/@zenie125</a></li>
+                            <li>Archives for deleted videos (video itself not available):</li>
+                            <li><a href="https://web.archive.org/web/20210211120543/https://www.youtube.com/watch?v=nzwilnU1_u4" class="link" target="_blank">https://web.archive.org/web/20210211120543/https://www.youtube.com/watch?v=nzwilnU1_u4</a></li>
+                            <li><a href="https://web.archive.org/web/20210319164804/https://www.youtube.com/watch?v=YDoO1szg72E" class="link" target="_blank">https://web.archive.org/web/20210319164804/https://www.youtube.com/watch?v=YDoO1szg72E</a></li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Cryfield1999, Reddit: u/Srybutimtoolazy (archives)</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Twitter (X): @zenie77_</h3>
+                        <ul>
+                            <li><a href="https://x.com/zenie77_" class="link" target="_blank">https://x.com/zenie77_</a></li>
+                            <li>Account suspended, Archive: <a href="https://archive.ph/1VREg" class="link" target="_blank">https://archive.ph/1VREg</a></li>
+                            <li>Picture when first discovered on Reddit: <a href="https://ibb.co/whNP2KF1" class="link" target="_blank">https://ibb.co/whNP2KF1</a></li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Tricky-Addition-6860</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Discord: @z3nie</h3>
+                        <ul>
+                            <li>Discord: @z3nie (zenie#1831, ID 267702725184061440)</li>
+                            <li>Account obfuscated, Archive of ID lookup: <a href="https://archive.ph/7dL1j" class="link" target="_blank">https://archive.ph/7dL1j</a></li>
+                            <li>Notably, the profile picture is Dylan Klebold’s corpse.</li>
+                            <li>Found via start.gg page and relevant servers</li>
+                            <li>The complete Discord profile: <a href="https://ibb.co/Ps2Nc9Gd" class="link" target="_blank">https://ibb.co/Ps2Nc9Gd</a> (PC), <a href="https://ibb.co/BdsxRkn" class="link" target="_blank">https://ibb.co/BdsxRkn</a> (iPhone)</li>
+                            <li>Messages to and from:</li>
+                            <li><a href="https://ibb.co/x8jx56LX" class="link" target="_blank">https://ibb.co/x8jx56LX</a></li>
+                            <li><a href="https://ibb.co/Y94z7Ps" class="link" target="_blank">https://ibb.co/Y94z7Ps</a></li>
+                            <li><a href="https://ibb.co/fb9zpJL" class="link" target="_blank">https://ibb.co/fb9zpJL</a></li>
+                            <li><a href="https://ibb.co/bRNfwJPt" class="link" target="_blank">https://ibb.co/bRNfwJPt</a></li>
+                            <li><a href="https://ibb.co/qLyqfCNh" class="link" target="_blank">https://ibb.co/qLyqfCNh</a></li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Srybutimtoolazy, Reddit: u/Tricky-Addition-6860 (profile images)</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Tumblr: z3nie</h3>
+                        <ul>
+                            <li><a href="https://www.tumblr.com/z3nie" class="link" target="_blank">https://www.tumblr.com/z3nie</a></li>
+                            <li>Account suspended, Archive: <a href="https://archive.is/JwZLv" class="link" target="_blank">https://archive.is/JwZLv</a></li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Affectionate_Bank747</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Spotify: z3</h3>
+                        <ul>
+                            <li><a href="https://open.spotify.com/user/31mls3s5lyif6hwaww4baw547uru" class="link" target="_blank">https://open.spotify.com/user/31mls3s5lyif6hwaww4baw547uru</a></li>
+                            <li>Confirmed based on the complete excerpt of his Discord profile (with which the Spotify account was connected)</li>
+                        </ul>
+                        <p class="credits">Credit: Tumblr: @bezhtbya, Reddit: u/Tricky-Addition-6860 (verification)</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Twitter (X): @zenie2k</h3>
+                        <ul>
+                            <li><a href="https://x.com/zenie2k" class="link" target="_blank">https://x.com/zenie2k</a> (already deleted when first found)</li>
+                            <li>Plenty of content was archived: <a href="https://web.archive.org/web/*/https://twitter.com/zenie2k*" class="link" target="_blank">https://web.archive.org/web/*/https://twitter.com/zenie2k*</a><br>ONLY STUFF POSTED AFTER OCTOBER 2020; posts before that are of a different Twitter (X) user (NSFW!)</li>
+                            <li>High-quality pictures of his cat:</li>
+                            <li><a href="https://web.archive.org/web/20210308212731/https://twitter.com/zenie2k/status/1369037007368912896" class="link" target="_blank">https://web.archive.org/web/20210308212731/https://twitter.com/zenie2k/status/1369037007368912896</a></li>
+                            <li><a href="https://web.archive.org/web/20210402233641/https://twitter.com/zenie2k/status/1378129182018928641" class="link" target="_blank">https://web.archive.org/web/20210402233641/https://twitter.com/zenie2k/status/1378129182018928641</a></li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Srybutimtoolazy</p>
+                    </div>
+                </section>
+                <hr class="section-divider">
+
+                <section id="secondary-profiles" class="mb-12">
+                    <h2 class="section-header">OTHER LESS SIGNIFICANT PROFILES</h2>
+                    <div class="sub-section">
+                        <h3>Pinterest: pumaachleitner</h3>
+                        <ul>
+                            <li><a href="https://pinterest.com/pumaachleitner/" class="link" target="_blank">https://pinterest.com/pumaachleitner/</a></li>
+                            <li>Thought so because of the Jett (Valorant main) related fan art and because the profile picture contains fan art of YouTuber Selbstgespräch, which Arthur Achleitner appears to have been a fan of (see former username in NameMC and one of his Twitter accounts follows Selbstgespräch). One of the saved images is a picture of Griffith from the anime/manga Berserk, which was also a former profile picture on the zenie125 YouTube channel. Griffith is also a former username of his in Valorant.</li>
+                            <li>Seeing saved stuff requires login; image of it has been archived: <a href="https://ibb.co/vCRz1HNV" class="link" target="_blank">https://ibb.co/vCRz1HNV</a></li>
+                        </ul>
+                        <p class="credits">Credit: Tumblr: @throisma</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Twitter (X): AchleitnerKris</h3>
+                        <ul>
+                            <li><a href="https://x.com/AchleitnerKris" class="link" target="_blank">https://x.com/AchleitnerKris</a></li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Stock_Layer2832</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Snapchat: arthur77125</h3>
+                        <ul>
+                            <li><a href="https://www.snapchat.com/add/arthur77125" class="link" target="_blank">https://www.snapchat.com/add/arthur77125</a> (likely, because of the numbers and was found at the same time as the other profiles)</li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Proof-Specialist6932</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Twitch: z3nieof</h3>
+                        <ul>
+                            <li><a href="https://twitch.tv/z3nieof" class="link" target="_blank">https://twitch.tv/z3nieof</a></li>
+                            <li>Found because it was linked to in one of the esports team’s social media</li>
+                        </ul>
+                        <p class="credits">Credit: Tumblr: @achleitner</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Google Maps Reviews</h3>
+                        <ul>
+                            <li><a href="https://www.google.com/maps/contrib/102539239335123551199/reviews/" class="link" target="_blank">https://www.google.com/maps/contrib/102539239335123551199/reviews/</a></li>
+                            <li>Image of his only review: <a href="https://ibb.co/LDxLDfBp" class="link" target="_blank">https://ibb.co/LDxLDfBp</a> (English), <a href="https://ibb.co/jPND8RBr" class="link" target="_blank">https://ibb.co/jPND8RBr</a> (original/German)</li>
+                        </ul>
+                        <p class="credits">Credit: WPD: TehMorbidlyCurious1, Reddit: u/Tricky-Addition-6860 (images)</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>DeviantArt: zenieval</h3>
+                        <ul>
+                            <li><a href="https://www.deviantart.com/zenieval" class="link" target="_blank">https://www.deviantart.com/zenieval</a></li>
+                        </ul>
+                        <p class="credits">Credit: WPD: TehMorbidlyCurious1</p>
+                    </div>
+                </section>
+                <hr class="section-divider">
+
+                <section id="deleted-profiles" class="mb-12">
+                    <h2 class="section-header">OTHER PROFILES THAT WERE ALREADY DELETED WHEN DISCOVERED</h2>
+                    <div class="sub-section">
+                        <h3>TikTok: @zenie197</h3>
+                        <ul>
+                            <li><a href="https://www.tiktok.com/@zenie197" class="link" target="_blank">https://www.tiktok.com/@zenie197</a> ("banned" - why???)</li>
+                            <li>Found because it follows ex-esports team members: <a href="https://ibb.co/XrCFfcYX" class="link" target="_blank">https://ibb.co/XrCFfcYX</a>, proof that he really follows his mate, but I’m not gonna show the @: <a href="https://ibb.co/gLySFZhK" class="link" target="_blank">https://ibb.co/gLySFZhK</a></li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Tricky-Addition-6860</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Reddit: zenieVAL</h3>
+                        <ul>
+                            <li><a href="https://www.reddit.com/user/zenieVAL/" class="link" target="_blank">https://www.reddit.com/user/zenieVAL/</a> (deleted)</li>
+                            <li>Can be searched through here: <a href="https://arctic-shift.photon-reddit.com/search?fun=comments_search&author=zenieVAL&limit=100&sort=desc" class="link" target="_blank">https://arctic-shift.photon-reddit.com/search?fun=comments_search&author=zenieVAL&limit=100&sort=desc</a></li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Srybutimtoolazy</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Twitch: zenieval</h3>
+                        <ul>
+                            <li><a href="https://www.twitch.tv/zenieval" class="link" target="_blank">https://www.twitch.tv/zenieval</a> (deleted)</li>
+                            <li>Found via esports-related linking on Twitter (X) and his vlr.gg profile</li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Srybutimtoolazy</p>
+                    </div>
+                </section>
+                <hr class="section-divider">
+
+                <section id="steam-platforms" class="mb-12">
+                    <h2 class="section-header">STEAM SITES</h2>
+                    <div class="sub-section">
+                        <h3>Steam</h3>
+                        <ul>
+                            <li><a href="https://steamcommunity.com/profiles/76561198210368431" class="link" target="_blank">https://steamcommunity.com/profiles/76561198210368431</a></li>
+                            <li>Found via Faceit page</li>
+                            <li>Post history: <a href="https://steamcommunity.com/profiles/76561198210368431/posthistory/" class="link" target="_blank">https://steamcommunity.com/profiles/76561198210368431/posthistory/</a></li>
+                            <li>Screenshots of his post history if it gets deleted, since it’s not archivable: <a href="https://ibb.co/zVYJdFrY" class="link" target="_blank">https://ibb.co/zVYJdFrY</a> and <a href="https://ibb.co/9L2Gh1G" class="link" target="_blank">https://ibb.co/9L2Gh1G</a></li>
+                            <li>Games list image: <a href="https://imgur.com/gallery/all-steam-games-of-arthur-achleitner-zenie-XmFUNit" class="link" target="_blank">https://imgur.com/gallery/all-steam-games-of-arthur-achleitner-zenie-XmFUNit</a></li>
+                            <li>Has been archived multiple times over before:</li>
+                            <li>2016: <a href="https://web.archive.org/web/20160928044113/https://steamcommunity.com/profiles/76561198210368431" class="link" target="_blank">https://web.archive.org/web/20160928044113/https://steamcommunity.com/profiles/76561198210368431</a></li>
+                            <li>2024: <a href="https://web.archive.org/web/20240518221758/https://steamcommunity.com/id/zenie77" class="link" target="_blank">https://web.archive.org/web/20240518221758/https://steamcommunity.com/id/zenie77</a></li>
+                            <li>Early 2025: <a href="https://web.archive.org/web/20250117060559/https://steamcommunity.com/id/zenie77/?utm_source=SteamLadder.com" class="link" target="_blank">https://web.archive.org/web/20250117060559/https://steamcommunity.com/id/zenie77/?utm_source=SteamLadder.com</a></li>
+                            <li>He also wrote some comments on the Steam page of these three users:</li>
+                            <li><a href="https://archive.ph/Vk857" class="link" target="_blank">https://archive.ph/Vk857</a></li>
+                            <li><a href="https://archive.ph/mEl7Y" class="link" target="_blank">https://archive.ph/mEl7Y</a></li>
+                            <li><a href="https://archive.ph/z0AZj" class="link" target="_blank">https://archive.ph/z0AZj</a></li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Srybutimtoolazy, Reddit: u/Tricky-Addition-6860 (screenshots, comments)</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>SteamID.uk</h3>
+                        <ul>
+                            <li><a href="https://steamid.uk/profile/76561198210368431" class="link" target="_blank">https://steamid.uk/profile/76561198210368431</a></li>
+                            <li>Includes list of 175 former usernames: <a href="https://files.catbox.moe/1d9t4c.csv" class="link" target="_blank">https://files.catbox.moe/1d9t4c.csv</a></li>
+                            <li>Former Steam groups: <a href="https://files.catbox.moe/p746tu.csv" class="link" target="_blank">https://files.catbox.moe/p746tu.csv</a></li>
+                            <li>Last known friends and former friends list: <a href="https://files.catbox.moe/xvhk96.csv" class="link" target="_blank">https://files.catbox.moe/xvhk96.csv</a></li>
+                            <li>77 former avatars (archived)</li>
+                            <li>Former custom URLs</li>
+                        </ul>
+                        <p class="credits">Credit: anonymous, Reddit: u/Srybutimtoolazy (usernames, groups, friends list)</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>SteamHistory.net</h3>
+                        <ul>
+                            <li><a href="https://steamhistory.net/id/76561198210368431" class="link" target="_blank">https://steamhistory.net/id/76561198210368431</a></li>
+                            <li>Includes more former usernames</li>
+                        </ul>
+                        <p class="credits">Credit: [credit not known]</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>csgo.exchange</h3>
+                        <ul>
+                            <li><a href="https://csgo.exchange/id/76561198210368431" class="link" target="_blank">https://csgo.exchange/id/76561198210368431</a></li>
+                        </ul>
+                        <p class="credits">Credit: anonymous</p>
+                    </div>
+                </section>
+                <hr class="section-divider">
+
+                <section id="minecraft" class="mb-12">
+                    <h2 class="section-header">MINECRAFT</h2>
+                    <div class="sub-section">
+                        <h3>NameMC</h3>
+                        <ul>
+                            <li><a href="https://namemc.com/profile/zenie_.1" class="link" target="_blank">https://namemc.com/profile/zenie_.1</a></li>
+                            <li>Includes a long list of former usernames</li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Srybutimtoolazy</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Laby.net</h3>
+                        <ul>
+                            <li><a href="https://laby.net/@zenie_" class="link" target="_blank">https://laby.net/@zenie_</a></li>
+                        </ul>
+                        <p class="credits">Credit: WPD: AndrewKehoe</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Plancke.io</h3>
+                        <ul>
+                            <li><a href="https://plancke.io/hypixel/player/stats/zenie_" class="link" target="_blank">https://plancke.io/hypixel/player/stats/zenie_</a></li>
+                        </ul>
+                        <p class="credits">Credit: anonymous</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Sky.shiiyu.moe</h3>
+                        <ul>
+                            <li><a href="https://sky.shiiyu.moe/stats/zenie_/Apple" class="link" target="_blank">https://sky.shiiyu.moe/stats/zenie_/Apple</a></li>
+                        </ul>
+                        <p class="credits">Credit: anonymous</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Timolia.de</h3>
+                        <ul>
+                            <li><a href="https://timolia.de/en/stats/VeX77" class="link" target="_blank">https://timolia.de/en/stats/VeX77</a></li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/trippieice</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>25karma.xyz</h3>
+                        <ul>
+                            <li><a href="https://25karma.xyz/player/9ac09b64-6d22-4131-ac4e-7263dd714621" class="link" target="_blank">https://25karma.xyz/player/9ac09b64-6d22-4131-ac4e-7263dd714621</a></li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/No_Car_3676</p>
+                    </div>
+                </section>
+                <hr class="section-divider">
+
+                <section id="esports" class="mb-12">
+                    <h2 class="section-header">ESPORTS AND GAMING PROFILES</h2>
+                    <div class="sub-section">
+                        <h3>Faceit</h3>
+                        <ul>
+                            <li><a href="https://www.faceit.com/en/players/zenie2K" class="link" target="_blank">https://www.faceit.com/en/players/zenie2K</a></li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Srybutimtoolazy</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>TheSpike: zenie</h3>
+                        <ul>
+                            <li><a href="https://www.thespike.gg/player/zenie/8643" class="link" target="_blank">https://www.thespike.gg/player/zenie/8643</a></li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Srybutimtoolazy</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Start.gg</h3>
+                        <ul>
+                            <li><a href="https://www.start.gg/user/bfe49697" class="link" target="_blank">https://www.start.gg/user/bfe49697</a></li>
+                            <li>Account deleted, Archive: <a href="https://archive.is/3zW3Q" class="link" target="_blank">https://archive.is/3zW3Q</a></li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Srybutimtoolazy</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Vlr.gg: zenie</h3>
+                        <ul>
+                            <li><a href="https://www.vlr.gg/player/8833/zenie" class="link" target="_blank">https://www.vlr.gg/player/8833/zenie</a></li>
+                            <li>Account censored, Archive: <a href="https://archive.ph/WS7Fy" class="link" target="_blank">https://archive.ph/WS7Fy</a></li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Srybutimtoolazy</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Valorantinfo.kr</h3>
+                        <ul>
+                            <li><a href="https://valorantinfo.kr/player/8833" class="link" target="_blank">https://valorantinfo.kr/player/8833</a></li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Tricky-Addition-6860</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Bo3.gg</h3>
+                        <ul>
+                            <li><a href="https://bo3.gg/valorant/players/zenie" class="link" target="_blank">https://bo3.gg/valorant/players/zenie</a></li>
+                            <li>Account deleted, Archive: <a href="https://archive.is/tEulb" class="link" target="_blank">https://archive.is/tEulb</a></li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Srybutimtoolazy</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Valorantstats.xyz</h3>
+                        <ul>
+                            <li><a href="https://valorantstats.xyz/stats/profile/Kaiser-SCDE" class="link" target="_blank">https://valorantstats.xyz/stats/profile/Kaiser-SCDE</a></li>
+                            <li>Probably just my ape brain trying to see patterns, but his Riot user tagline SCDE could stand for suicide (it’s been changed this year)</li>
+                            <li>Note: Since adding this, the profile has gone private (maybe because visiting it caused it to update). It included a list with former usernames, which is why I was able to verify that it was one of his accounts. The following former usernames I can remember: "z3nie#uwu", "GG z3nie#XII", and one starting with "Griffith" but I don’t remember the tagline</li>
+                            <li>Can now also be confirmed with the challengermode site</li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Srybutimtoolazy</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Tracker.gg: Valorant</h3>
+                        <ul>
+                            <li><a href="https://tracker.gg/valorant/profile/riot/Kaiser%23SCDE/overview" class="link" target="_blank">https://tracker.gg/valorant/profile/riot/Kaiser%23SCDE/overview</a></li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Srybutimtoolazy</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Gamevasion</h3>
+                        <ul>
+                            <li><a href="https://www.gamevasion.de/en/users/1484656-zenie" class="link" target="_blank">https://www.gamevasion.de/en/users/1484656-zenie</a></li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/duajkfn</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Gosugamers</h3>
+                        <ul>
+                            <li><a href="https://www.gosugamers.net/valorant/players/539643-zenie" class="link" target="_blank">https://www.gosugamers.net/valorant/players/539643-zenie</a></li>
+                        </ul>
+                        <p class="credits">Credit: [credit not known]</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Tracker.gg: CS2</h3>
+                        <ul>
+                            <li><a href="https://tracker.gg/cs2/profile/steam/76561198210368431" class="link" target="_blank">https://tracker.gg/cs2/profile/steam/76561198210368431</a></li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Numerous-Zone-2328</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>CSstats.gg</h3>
+                        <ul>
+                            <li><a href="https://csstats.gg/player/76561198210368431" class="link" target="_blank">https://csstats.gg/player/76561198210368431</a></li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Numerous-Zone-2328</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Leetify</h3>
+                        <ul>
+                            <li><a href="https://leetify.com/public/profile/76561198210368431" class="link" target="_blank">https://leetify.com/public/profile/76561198210368431</a></li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Numerous-Zone-2328</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Trends.tf</h3>
+                        <ul>
+                            <li><a href="https://trends.tf/player/76561198210368431/" class="link" target="_blank">https://trends.tf/player/76561198210368431/</a></li>
+                            <li>Chat logs included in the game logs reveal he had a dog named Nero</li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Numerous-Zone-2328</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>Challengermode.com</h3>
+                        <ul>
+                            <li><a href="https://www.challengermode.com/users/971534c5-afa3-4303-b00f-6ba99d45bb54" class="link" target="_blank">https://www.challengermode.com/users/971534c5-afa3-4303-b00f-6ba99d45bb54</a></li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Numerous-Zone-2328</p>
+                    </div>
+                    <div class="sub-section">
+                        <h3>csgorankings.com</h3>
+                        <ul>
+                            <li><a href="https://csgorankings.com/profile/76561198210368431" class="link" target="_blank">https://csgorankings.com/profile/76561198210368431</a></li>
+                            <li>The last seen date always shows the current date and not when the user was last online</li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Numerous-Zone-2328</p>
+                    </div>
+                </section>
+                <hr class="section-divider">
+
+                <section id="videos" class="mb-12">
+                    <h2 class="section-header">VIDEOS FEATURING ARTHUR</h2>
+                    <div class="sub-section">
+                        <ul>
+                            <li>Vocaroo upload video featuring his voice: <a href="https://voca.ro/165P5qkY35Jl" class="link" target="_blank">https://voca.ro/165P5qkY35Jl</a> (skip to 03:01, he’s the quiet higher-pitched one)</li>
+                            <li>Voice isolated version: <a href="https://drive.google.com/file/d/1SO892pabuoSJTF15tYpih7q22d1yIS98" class="link" target="_blank">https://drive.google.com/file/d/1SO892pabuoSJTF15tYpih7q22d1yIS98</a></li>
+                            <li>Full video featuring his voice by Glacial Guardians | 28.11.2024: <a href="https://gofile.io/d/r3XOqS" class="link" target="_blank">https://gofile.io/d/r3XOqS</a></li>
+                            <li>Full video of his Glacial Guardians Introducing (skip to the 42 second) | 28.10.2024: <a href="https://gofile.io/d/aujbPP" class="link" target="_blank">https://gofile.io/d/aujbPP</a></li>
+                            <li>Twitter (X) Commentary of a collateral and another kill | 22.04.2023: <a href="https://gofile.io/d/AHUtH1" class="link" target="_blank">https://gofile.io/d/AHUtH1</a></li>
+                            <li>Instagram Reel posted by a teammate during VulkanLAN 2024: <a href="https://gofile.io/d/phRCro" class="link" target="_blank">https://gofile.io/d/phRCro</a></li>
+                            <li>VulkanLAN 2024 Valorant Overall Final map 1 (Bind) | 26.10.2024: <a href="https://gofile.io/d/NAtJ6D" class="link" target="_blank">https://gofile.io/d/NAtJ6D</a></li>
+                            <li>VulkanLAN 2024 Valorant Overall Final map 2 (Ascent) | 26.10.2024: <a href="https://gofile.io/d/puRdbU" class="link" target="_blank">https://gofile.io/d/puRdbU</a></li>
+                            <li>VulkanLAN 2024 Day 3 presentation ceremony | 27.10.2024: <a href="https://gofile.io/d/kF5Cgt" class="link" target="_blank">https://gofile.io/d/kF5Cgt</a></li>
+                            <li>Note: Arthur was only a substitute player for Sissi State Punks at this tournament and was never under contract with them</li>
+                            <li>Official statements of Glacial Guardians and Sissi State Punks: <a href="https://archive.is/D7uRi" class="link" target="_blank">https://archive.is/D7uRi</a>, <a href="https://archive.is/VioaY" class="link" target="_blank">https://archive.is/VioaY</a></li>
+                            <li>Feel free to DM the person who got credited if the download links have expired.</li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Srybutimtoolazy (Vocaroo, Glacial Guardians video, VulkanLAN map 1), Reddit: u/Tricky-Addition-6860 (Glacial Guardians intro, Twitter (X) commentary, Instagram Reel, VulkanLAN ceremony), Reddit: u/Duajkfn (VulkanLAN map 2), WPD: pirupii (voice isolated)</p>
+                    </div>
+                </section>
+                <hr class="section-divider">
+
+                <section id="photos" class="mb-12">
+                    <h2 class="section-header">PHOTOS FEATURING ARTHUR</h2>
+                    <div class="sub-section">
+                        <ul>
+                            <li>Full-size Tumblr profile picture: <a href="https://ibb.co/ccXs3sWX" class="link" target="_blank">https://ibb.co/ccXs3sWX</a></li>
+                            <li>Both pictures he posted on Tumblr 1 day before the shooting: <a href="https://ibb.co/rfd9vbFk" class="link" target="_blank">https://ibb.co/rfd9vbFk</a> (Glock 19), <a href="https://ibb.co/B7SkzvM" class="link" target="_blank">https://ibb.co/B7SkzvM</a> (Over/Under Shotgun)</li>
+                            <li>Full-size WhatsApp profile picture: <a href="https://ibb.co/pry3HKHt" class="link" target="_blank">https://ibb.co/pry3HKHt</a></li>
+                            <li>Twitter (X) media posted 9 minutes before the shooting: <a href="https://ibb.co/mrm192NJ" class="link" target="_blank">https://ibb.co/mrm192NJ</a></li>
+                            <li>VulkanLAN 2024 Pictures: <a href="https://ibb.co/XxTwpp2B" class="link" target="_blank">https://ibb.co/XxTwpp2B</a>, <a href="https://ibb.co/mCh5FMCP" class="link" target="_blank">https://ibb.co/mCh5FMCP</a>, <a href="https://ibb.co/hx26NX1d" class="link" target="_blank">https://ibb.co/hx26NX1d</a></li>
+                            <li>His CV posted by a company he applied to: <a href="https://ibb.co/5gmHDWYB" class="link" target="_blank">https://ibb.co/5gmHDWYB</a></li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Srybutimtoolazy (Tumblr profile, WhatsApp profile), Reddit: u/Tricky-Addition-6860 (Tumblr posts, Twitter (X) media, VulkanLAN pictures), [credit not known] (CV)</p>
+                    </div>
+                </section>
+                <hr class="section-divider">
+
+                <section id="shotgun" class="mb-12">
+                    <h2 class="section-header">SHOTGUN OWNED</h2>
+                    <div class="sub-section">
+                        <ul>
+                            <li>Note: The shotgun he owned was a Mercury Hunting Bockdoppelflinte Tactical, sold wholesale as "Mercury Sport Over and Under Shotgun Tactical" by Frankonia Handels GmbH & Co. KG</li>
+                            <li><a href="https://www.frankonia-b2b.com/en/p/mercury-sport/over-and-under-shotgun-tactical/2017121-65" class="link" target="_blank">https://www.frankonia-b2b.com/en/p/mercury-sport/over-and-under-shotgun-tactical/2017121-65</a></li>
+                            <li><a href="https://www.frankonia.de/p/mercury-hunting/bockdoppelflinte-tactical/2017121?query=mercury&lastSelected=f_s_kategorie&f_s_kategorie=Bockdoppelflinten" class="link" target="_blank">https://www.frankonia.de/p/mercury-hunting/bockdoppelflinte-tactical/2017121?query=mercury&lastSelected=f_s_kategorie&f_s_kategorie=Bockdoppelflinten</a></li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Srybutimtoolazy</p>
+                    </div>
+                </section>
+                <hr class="section-divider">
+
+                <section id="unconfirmed" class="mb-12">
+                    <h2 class="section-header">CONSIDERED BUT REJECTED</h2>
+                    <div class="sub-section">
+                        <ul>
+                            <li><a href="https://www.twitch.tv/vex77/" class="link" target="_blank">https://www.twitch.tv/vex77/</a> (no prior indication he played Destiny, most likely of the rejected ones though. Last stream date aligns with "vex77" on confirmed profiles)</li>
+                            <li><a href="https://x.com/FirefoxLP/" class="link" target="_blank">https://x.com/FirefoxLP/</a> (nothing in common besides that it sounds like "PirateFoxLP")</li>
+                            <li><a href="https://www.youtube.com/@firefoxlp6842" class="link" target="_blank">https://www.youtube.com/@firefoxlp6842</a> (same as above)</li>
+                            <li><a href="https://www.instagram.com/selbstgespreach/" class="link" target="_blank">https://www.instagram.com/selbstgespreach/</a> (too high of a chance, it’s most likely just a different fan of the German YouTuber Selbstgespräch)</li>
+                            <li><a href="https://www.instagram.com/ender_dragen/" class="link" target="_blank">https://www.instagram.com/ender_dragen/</a> (former account of above one)</li>
+                            <li><a href="https://www.tiktok.com/@zennieval" class="link" target="_blank">https://www.tiktok.com/@zennieval</a> (voices too dissimilar)</li>
+                            <li><a href="https://www.tiktok.com/@zenie77_" class="link" target="_blank">https://www.tiktok.com/@zenie77_</a> (created days after the shooting)</li>
+                            <li><a href="https://www.youtube.com/@zeni25" class="link" target="_blank">https://www.youtube.com/@zeni25</a> (confirmed not him)</li>
+                            <li><a href="https://www.roblox.com/users/4724013655/profile" class="link" target="_blank">https://www.roblox.com/users/4724013655/profile</a> (too little to go off, name is identical to Snapchat account, but it was first found 2 days later after the Snapchat account)</li>
+                            <li>The WPD account</li>
+                        </ul>
+                        <p class="credits">Credit: Reddit: u/Cryfield1999</p>
+                    </div>
+                </section>
+                <hr class="section-divider">
+
+                <section id="archiving" class="mb-12">
+                    <h2 class="section-header">ARCHIVING NOTE</h2>
+                    <div class="sub-section">
+                        <ul>
+                            <li>All pages have already been archived by u/Srybutimtoolazy. Screenshots exist of any content that couldn’t be archived via archive.today or Wayback Machine; images have been downloaded with the highest resolution and videos archived with yt-dlp.</li>
+                            <li>Feel free to DM the person who got credited if the download links have expired or something else got deleted, but the link of a picture is 99% on archive.today, unless I missed archiving it.</li>
+                        </ul>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- JavaScript for Table of Contents -->
+    <script>
+        document.querySelectorAll('.toc-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.toc-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                const targetId = this.getAttribute('data-target');
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
